@@ -1,0 +1,24 @@
+{
+  "name": "yelpcamp",
+  "version": "1.0.0",
+  "description": "\"# YelpCamp\"",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SohelRaja/yelpcamp.git"
+  },
+  "author": "Sohel Raja",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SohelRaja/yelpcamp/issues"
+  },
+  "homepage": "https://github.com/SohelRaja/yelpcamp#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^2.6.2",
+    "express": "^4.17.1"
+  }
+}
