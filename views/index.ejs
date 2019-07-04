@@ -11,17 +11,19 @@
         </div>
     </header>
     <div class="row text-center" style="display:flex; flex-wrap:wrap;">
-        <% campgrounds.forEach(function(campground){ %>
+        <% campgrounds.forEach(function(campground){ %><!--Here campgrounds object is coming from INDEX routes-->
             <div class="col-md-3 col-sm-3">
                 <div class="card">
                     <img class="card-img-top img-thumbnail" src="<%= campground.image %>">
                     <div class="card-block">
                         <h4 class="card-title"><%= campground.name %></h4>
                     </div>
+                    <p>
+                        <a href="/campgrounds/<%= campground._id %>" class="btn btn-primary">More Info!</a>
+                    </p>
                 </div>
             </div>
         <% }); %>
     </div>
 </div>
-
 <% include partials/footer %>
