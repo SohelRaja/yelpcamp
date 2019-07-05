@@ -1,32 +1,20 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+//Require schema
+var Campground = require("./models/campground.js");
+//Connect to express.js
 var app = express();
+//SEED FILE
+var seedDB = require('./seeds.js');
+seedDB();
+//Connect to DB
 mongoose.connect("mongodb://localhost/yelp_camp_1");
-
+//Some required stuff
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(__dirname + '/public'));
 app.set("view engine","ejs");
 
-//Set up schema
-var campgroundSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-var Campground  = mongoose.model("Campground",campgroundSchema);//mongoose.model("db_name",mongoose.schema({...}));
-/*Campground.create({
-    name: "Rohan",
-    image:"https://pixabay.com/get/55e4d5454b51ab14f6da8c7dda793f7f1636dfe2564c704c732d7ad29644c25b_340.jpg",
-    description:"This is awesome. This is the best campground."
-    },function(err,campground){
-        if(err){
-            console.log(err);
-        }else{
-            console.log("Newly campground created:");
-            console.log(campground);
-        }
-    });*/
 ///////Home Routes
 app.get('/',function(req,res){
     res.render("landing.ejs");
@@ -70,7 +58,10 @@ app.post("/campgrounds",function(req,res){
 ///////SHOW ROUTES-> Show info about one specific campground
 app.get("/campgrounds/:id",function(req,res){
     //Find the campground with provided id 
-    Campground.findById(req.params.id,function(err,foundCampground){
+    Campground.findById(req.params.id).populate("comments").exec(function(err,foundCampground){
+        //Firstly we find a specific campground by 'req.params.id',
+        //then fetch whole comment from DB by stored comment id inside comments array of campground schema,
+        //then we execute the callback function by using 'exec' method 
         if(err){
             console.log(err);
         }else{
