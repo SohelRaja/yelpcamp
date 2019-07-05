@@ -29,13 +29,13 @@ app.get("/campgrounds",function(req,res){
             //It will render to index.ejs file 
             //with allCampgrounds which is stored inside campgrounds array,
             //I Will access that array inside the index.ejs file
-            res.render('index.ejs',{campgrounds: allCampgrounds});
+            res.render('campgrounds/index.ejs',{campgrounds: allCampgrounds});
         }
     });
 });
 //////NEW ROUTES-> Show form to create new campground
 app.get("/campgrounds/new",function(req,res){
-    res.render("new.ejs");
+    res.render("campgrounds/new.ejs");
 });
 //////CREATE ROUTES-> Add new campground to DB
 app.post("/campgrounds",function(req,res){
@@ -67,10 +67,24 @@ app.get("/campgrounds/:id",function(req,res){
         }else{
             //Render show template with that campground
             //foundCampground will store inside the campground object, which we will access inside show.ejs file
-            res.render("show.ejs",{campground: foundCampground});
+            res.render("campgrounds/show.ejs",{campground: foundCampground});
         }
     });
 });
+//======================
+//COMMENTS ROUTES
+//======================
+app.get("/campgrounds/:id/comments/new",function(req,res){
+    //find campground by id
+    Campground.findById(req.params.id,function(err,campground){
+        if(err){
+            console.log(err);
+        }else{
+            res.render("comments/new.ejs",{campground: campground});
+        }
+    });
+});
+
 app.listen(3000,function(){
     console.log("YelpCamp server has started.");
 });
