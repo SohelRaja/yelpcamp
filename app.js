@@ -157,7 +157,11 @@ app.post("/login",passport.authenticate("local",
         failureRedirect: "/login"
     }),function(req,res){
 });
-
+//Logout route
+app.get("/logout",function(req,res){
+    req.logout();
+    res.redirect("/campgrounds");
+});
 app.listen(3000,function(){
     console.log("YelpCamp server has started.");
 });
