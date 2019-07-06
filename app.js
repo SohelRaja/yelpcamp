@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const methodOverride = require('method-override');
 
 //Requiring Routes
 var campgroundRoutes = require("./routes/campgrounds.js");
@@ -28,6 +29,7 @@ mongoose.connect("mongodb://localhost/yelp_camp_1");
 //Some required stuff
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(__dirname + '/public'));
+app.use(methodOverride("_method"));
 app.set("view engine","ejs");
 
 //=======================

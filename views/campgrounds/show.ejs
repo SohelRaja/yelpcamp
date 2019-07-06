@@ -15,10 +15,11 @@
                 <div class="card-block">
 					<h5 class="float-right p-2">$5.99/day</h5>
                     <h4 class="card-title p-2"><a href=""><%= campground.name %></a></h4>
-                    <h5 class="card-title p-2"><em>Submitted by <%= campground.author.username %></em></h5>
 					<p class="p-2">
 						<%= campground.description %>
                     </p>
+                    <h5 class="card-title p-2"><em>Submitted by <%= campground.author.username %></em></h5>
+                    <p class="pl-4"><a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a></p>
                 </div>
             </div>
             <div><br></div>

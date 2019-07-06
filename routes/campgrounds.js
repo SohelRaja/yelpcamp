@@ -60,7 +60,28 @@ router.get("/campgrounds/:id",function(req,res){
         }
     });
 });
-
+//EDIT ROUTES-> To edit a specific campground .... GET request
+router.get("/campgrounds/:id/edit",function(req,res){
+    Campground.findById(req.params.id,function(err,foundCampground){
+        if(err){
+            res.redirect("/campgrounds/" + campground._id);
+        }else{
+            res.render("campgrounds/edit.ejs",{campground: foundCampground});
+        }
+    });
+});
+//UPDATE ROUTES-> To update a specific campground .... PUT request
+router.put("/campgrounds/:id",function(req,res){
+    //find and update the correct campground
+    Campground.findByIdAndUpdate(req.params.id,req.body.campground,function(err,updatedCampground){
+        if(err){
+            res.redirect("/campgrounds");
+        }else{
+            res.redirect("/campgrounds/" + updatedCampground._id ); //or, we can req.params.id
+        }
+    });
+    //redirect to show.ejs page of campgrounds
+});
 //middleware
 function isLoggedIn(req,res,next){
     if(req.isAuthenticated()){
