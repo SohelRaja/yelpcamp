@@ -77,10 +77,20 @@ router.put("/campgrounds/:id",function(req,res){
         if(err){
             res.redirect("/campgrounds");
         }else{
+            //redirect to show.ejs page of campgrounds
             res.redirect("/campgrounds/" + updatedCampground._id ); //or, we can req.params.id
         }
     });
-    //redirect to show.ejs page of campgrounds
+});
+//DELETE ROUTES-> to delete a specific routes
+router.delete("/campgrounds/:id",function(req,res){
+    Campground.findByIdAndRemove(req.params.id,function(err){
+        if(err){
+            res.redirect("/campgrounds");
+        }else{
+            res.redirect("/campgrounds");
+        }
+    });
 });
 //middleware
 function isLoggedIn(req,res,next){
