@@ -1,9 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
 //Require schema
 var Campground = require("./models/campground.js");
 var Comment = require("./models/comment.js");
+var User = require('./models/user.js');
 //Connect to express.js
 var app = express();
 //SEED FILE
