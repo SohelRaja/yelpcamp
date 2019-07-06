@@ -33,6 +33,10 @@ passport.use(new LocalStrategy(User.authenticate()));//User.authenticate is comm
 passport.serializeUser(User.serializeUser());       //User.serializedUser is comming from passport-local-mongoose package
 passport.deserializeUser(User.deserializeUser());  //User.deserializedUser is comming from passport-local-mongoose package
 
+app.use(function(req,res,next){
+    res.locals.currentUser = req.user;
+    next();
+});
 ///////Home Routes
 app.get('/',function(req,res){
     res.render("landing.ejs");
