@@ -30,7 +30,7 @@
                     <% campground.comments.forEach(function(comment){ %>
                     <div class="row">
                         <div class="col-md-12">
-                            <b><%= comment.author %></b>
+                            <b><%= comment.author.username %></b>
                             <span class="float-right">10 day ago</span>
                             <p>
                                 <%= comment.text %>

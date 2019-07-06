@@ -19,8 +19,8 @@ var User = require('./models/user.js');
 var app = express();
 
 //SEED FILE
-var seedDB = require('./seeds.js');
-seedDB();
+/*var seedDB = require('./seeds.js');
+seedDB();*/
 
 //Connect to DB
 mongoose.connect("mongodb://localhost/yelp_camp_1");
