@@ -19,6 +19,20 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(__dirname + '/public'));
 app.set("view engine","ejs");
 
+//========
+//Password Configuration
+//========
+app.use(require("express-session")({
+    secret: "NodeJS is awesome",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));//User.authenticate is comming from passport-local-mongoose package
+passport.serializeUser(User.serializeUser());       //User.serializedUser is comming from passport-local-mongoose package
+passport.deserializeUser(User.deserializeUser());  //User.deserializedUser is comming from passport-local-mongoose package
+
 ///////Home Routes
 app.get('/',function(req,res){
     res.render("landing.ejs");
@@ -112,6 +126,27 @@ app.post("/campgrounds/:id/comments",function(req,res){
         }
     });
 });
+//=============
+//AUTH ROUTES
+//=============
+//show register form 
+app.get("/register",function(req,res){
+    res.render("register.ejs");
+});
+//handle sign up logic
+app.post("/register",function(req,res){
+    var newUser = new User({username: req.body.username});
+    User.register(newUser,req.body.password,function(err,user){//.register method is provided by passport-local-mongoose package
+        if(err){
+            console.log(err);
+            return res.render("register.ejs");
+        }
+        passport.authenticate("local")(req,res,function(){
+            res.redirect("/campgrounds");
+        });
+    });
+});
+
 
 app.listen(3000,function(){
     console.log("YelpCamp server has started.");
