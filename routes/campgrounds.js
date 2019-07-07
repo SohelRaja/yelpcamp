@@ -10,7 +10,9 @@ router.get("/campgrounds",function(req,res){
     //get all Campgrounds fron DB
     Campground.find({},function(err,allCampgrounds){
         if(err){
-            console.log(err);
+            req.flash("error","Something went wrong!");
+            res.redirect("back");
+            //console.log(err);
         }else{
             //It will render to index.ejs file 
             //with allCampgrounds which is stored inside campgrounds array,
@@ -38,9 +40,12 @@ router.post("/campgrounds",middleware.isLoggedIn,function(req,res){
     //Create a new campground and save to DataBase
     Campground.create(newCampground,function(err,newlyCreated){
         if(err){
-            console.log(err);
+            req.flash("error","Something went wrong!");
+            res.redirect("back");
+            //console.log(err);
         }else{
             //redirect back to campground page
+            req.flash("Success","Campground created!");
             res.redirect("/campgrounds"); //This will redirect to get route --- /campgrounds
         }
     });
@@ -53,7 +58,9 @@ router.get("/campgrounds/:id",function(req,res){
         //then fetch whole comment from DB by stored comment id inside comments array of campground schema,
         //then we execute the callback function by using 'exec' method 
         if(err){
-            console.log(err);
+            req.flash("error","Something went wrong!");
+            res.redirect("back");
+            //console.log(err);
         }else{
             //Render show template with that campground
             //foundCampground will store inside the campground object, which we will access inside show.ejs file
@@ -64,7 +71,12 @@ router.get("/campgrounds/:id",function(req,res){
 //EDIT ROUTES-> To edit a specific campground .... GET request
 router.get("/campgrounds/:id/edit",middleware.checkCampgroundOwnership,function(req,res){
     Campground.findById(req.params.id,function(err,foundCampground){
-        res.render("campgrounds/edit.ejs",{campground: foundCampground});
+        if(err){
+            req.flash("error","Something went wrong!");
+            res.redirect("back");
+        }else{
+            res.render("campgrounds/edit.ejs",{campground: foundCampground});
+        }
     });
 });
 //UPDATE ROUTES-> To update a specific campground .... PUT request
@@ -72,9 +84,11 @@ router.put("/campgrounds/:id",middleware.checkCampgroundOwnership,function(req,r
     //find and update the correct campground
     Campground.findByIdAndUpdate(req.params.id,req.body.campground,function(err,updatedCampground){
         if(err){
+            req.flash("error","Something went wrong, try again later!");
             res.redirect("/campgrounds");
         }else{
             //redirect to show.ejs page of campgrounds
+            req.flash("success","campground updated!");
             res.redirect("/campgrounds/" + updatedCampground._id ); //or, we can req.params.id
         }
     });
@@ -83,8 +97,10 @@ router.put("/campgrounds/:id",middleware.checkCampgroundOwnership,function(req,r
 router.delete("/campgrounds/:id",middleware.checkCampgroundOwnership,function(req,res){
     Campground.findByIdAndRemove(req.params.id,function(err){
         if(err){
+            req.flash("error","Something went wrong, try again later!");
             res.redirect("/campgrounds");
         }else{
+            req.flash("error","Campground deleted!");
             res.redirect("/campgrounds");
         }
     });

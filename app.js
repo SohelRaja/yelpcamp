@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const methodOverride = require('method-override');
+const flash = require("connect-flash");
 
 //Requiring Routes
 var campgroundRoutes = require("./routes/campgrounds.js");
@@ -31,6 +32,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(__dirname + '/public'));
 app.use(methodOverride("_method"));
 app.set("view engine","ejs");
+app.use(flash());
 
 //=======================
 //Password Configuration=
@@ -49,6 +51,8 @@ passport.deserializeUser(User.deserializeUser());  //User.deserializedUser is co
 //Define that user is present or not
 app.use(function(req,res,next){
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 
