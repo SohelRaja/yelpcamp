@@ -1,3 +1,6 @@
 #delete_form{
     display: inline;
 }
+.navbar-nav {
+    align-items: center !important;
+}

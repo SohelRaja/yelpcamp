@@ -88,7 +88,7 @@ router.put("/campgrounds/:id",middleware.checkCampgroundOwnership,function(req,r
             res.redirect("/campgrounds");
         }else{
             //redirect to show.ejs page of campgrounds
-            req.flash("success","campground updated!");
+            req.flash("success","Campground updated!");
             res.redirect("/campgrounds/" + updatedCampground._id ); //or, we can req.params.id
         }
     });

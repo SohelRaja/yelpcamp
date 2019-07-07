@@ -14,7 +14,7 @@ router.get("/campgrounds/:id/comments/new",middleware.isLoggedIn,function(req,re
     Campground.findById(req.params.id,function(err,campground){
         if(err){
             req.flash("error","Something went wrong!");
-            res.redirect("back");
+            res.redirect("/campgrounds");
             //console.log(err);
         }else{
             res.render("comments/new.ejs",{campground: campground});
