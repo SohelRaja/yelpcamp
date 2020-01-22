@@ -1,0 +1,3 @@
+# Campify
+
+A fully responsive and functional (CRUD and auth) website. Where users can log in and sign in for creating a camp post.Beside this users can comment on an existing camp post and customize his own camp post etc......
